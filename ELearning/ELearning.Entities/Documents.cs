@@ -7,7 +7,7 @@ namespace ELearning.Entities
     {
         [ForeignKey("LoginDetail")]
         public string UserId { get; set; }
-        public LoginDetails LoginDetail { get; set; }
+        public ApplicationUser LoginDetail { get; set; }
 
         [Column( TypeName = "varchar(100)")]
         public string Name { get; set; }

@@ -7,7 +7,7 @@ namespace ELearning.Entities
     {
         [ForeignKey("LoginDetail")]
         public string ParentID { get; set; }
-        public LoginDetails LoginDetail { get; set; }
+        public ApplicationUser LoginDetail { get; set; }
 
         [ForeignKey("StudentProfile")]
         public string StudentID { get; set; }

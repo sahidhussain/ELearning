@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -5,7 +6,13 @@ namespace ELearning.Entities
 {
     public class Parents
     {
-       
+
+        public Parents()
+        {
+            this.AssignParents = new HashSet<AssignParent>();
+        }
+
+
         [Key]
         [Column(TypeName = "varchar(100)")]
         public string ParentID { get; set; }
@@ -35,5 +42,8 @@ namespace ELearning.Entities
         [ForeignKey("Relationship")]
         public int RelationshipID { get; set; }
         public Relationship Relationship { get; set; }
+
+        public virtual ICollection<AssignParent> AssignParents { get; set; }
+
     }
 }
