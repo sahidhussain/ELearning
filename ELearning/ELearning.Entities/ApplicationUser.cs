@@ -11,7 +11,6 @@ namespace ELearning.Entities
         public ApplicationUser()
         {
             this.Addresses = new HashSet<Addresses>();
-            this.AssignParents = new HashSet<AssignParent>();
             this.AssignStudents = new HashSet<AssignStudent>();
             this.Documents = new HashSet<Documents>();
             this.EmergencyContacts = new HashSet<EmergencyContact>();
@@ -44,7 +43,6 @@ namespace ELearning.Entities
         public DateTime AccountModificationDate { get; set; }
 
         public virtual ICollection<Addresses> Addresses { get; set; }
-        public virtual ICollection<AssignParent> AssignParents { get; set; }
         public virtual ICollection<AssignStudent> AssignStudents { get; set; }
         public virtual ICollection<Documents> Documents { get; set; }
         public virtual ICollection<EmergencyContact> EmergencyContacts { get; set; }

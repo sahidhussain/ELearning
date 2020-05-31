@@ -14,9 +14,8 @@ namespace ELearning.Infrastructure.DbContext
             : base(options)
         {
         }
-        public DbSet<Addresses> UserDetails { get; set; }
-        public DbSet<AddressType> InstituteDetails { get; set; }
-        public DbSet<AssignParent> AssignParent { get; set; }
+        public DbSet<Addresses> Addresses { get; set; }
+        public DbSet<AddressType> AddressType { get; set; }
         public DbSet<AssignStudent> AssignStudent { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<Documents> Documents { get; set; }
@@ -37,14 +36,13 @@ namespace ELearning.Infrastructure.DbContext
             base.OnModelCreating(builder);
 
             builder.Entity<ApplicationUser>().ToTable("ApplicationUser");
-            builder.Entity<IdentityUserRole<long>>().ToTable("UserRole");
-            builder.Entity<IdentityUserLogin<long>>().ToTable("UserLogin");
-            builder.Entity<IdentityUserClaim<long>>().ToTable("UserClaim");
+            builder.Entity<IdentityUserRole<string>>().ToTable("UserRole");
+            builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogin");
+            builder.Entity<IdentityUserClaim<string>>().ToTable("UserClaim");
             builder.Entity<IdentityRole>().ToTable("Role");
-            builder.Entity<IdentityUserToken<long>>().ToTable("UserToken");
-            builder.Entity<IdentityRoleClaim<long>>().ToTable("RoleClaim");
+            builder.Entity<IdentityUserToken<string>>().ToTable("UserToken");
+            builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaim");
 
-            builder.Entity<AssignParent>().HasKey(k => new { k.AssigneeID, k.ParentID });
             builder.Entity<AssignStudent>().HasKey(k => new { k.StudentID, k.ParentID });
 
             builder.Entity<AddressType>().HasIndex(i => i.Name).IsUnique();

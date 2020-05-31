@@ -4,18 +4,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ELearning.Entities
 {
-    public class Parents
+    public class Parents : BaseEntity<int>
     {
 
-        public Parents()
-        {
-            this.AssignParents = new HashSet<AssignParent>();
-        }
-
-
-        [Key]
-        [Column(TypeName = "varchar(100)")]
-        public string ParentID { get; set; }
+        [ForeignKey("ApplicationUser")]
+        public string ChildID { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
 
         [ForeignKey("Title")]
         public int TitleID { get; set; }
@@ -42,8 +36,6 @@ namespace ELearning.Entities
         [ForeignKey("Relationship")]
         public int RelationshipID { get; set; }
         public Relationship Relationship { get; set; }
-
-        public virtual ICollection<AssignParent> AssignParents { get; set; }
 
     }
 }
