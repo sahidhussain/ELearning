@@ -6,9 +6,11 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Helper\" />
-    <Folder Include="Extensions\" />
-    <Folder Include="Middlewares\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.4.1" />
+    <PackageReference Include="Swashbuckle.Core" Version="5.6.0" />
   </ItemGroup>
 
 
