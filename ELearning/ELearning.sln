@@ -7,13 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELearning.API", "ELearning.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELearning.Dto", "ELearning.Dto\ELearning.Dto.csproj", "{F42802BB-12D4-4BB7-B2A8-4BA79FE57115}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELearning.Entities", "ELearning.Entities\ELearning.Entities.csproj", "{4D7D7BFA-D470-4E5C-A57D-2B603025E2EF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELearning.Infrastructure", "ELearning.Infrastructure\ELearning.Infrastructure.csproj", "{CD7CAF83-931B-449E-8AEF-5EEAFE98698E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELearning.Services", "ELearning.Services\ELearning.Services.csproj", "{C46B650D-58F0-4190-89AB-4592BD4A4F17}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELearning.IOC", "ELearning.IOC\ELearning.IOC.csproj", "{66EBCA76-7E12-4747-8208-2579D34995DD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ELearning.Entities", "ELearning.Entities\ELearning.Entities.csproj", "{034C707D-AD9B-451B-9F18-91973767C6A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,6 @@ Global
 		{F42802BB-12D4-4BB7-B2A8-4BA79FE57115}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F42802BB-12D4-4BB7-B2A8-4BA79FE57115}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F42802BB-12D4-4BB7-B2A8-4BA79FE57115}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4D7D7BFA-D470-4E5C-A57D-2B603025E2EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4D7D7BFA-D470-4E5C-A57D-2B603025E2EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4D7D7BFA-D470-4E5C-A57D-2B603025E2EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4D7D7BFA-D470-4E5C-A57D-2B603025E2EF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CD7CAF83-931B-449E-8AEF-5EEAFE98698E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CD7CAF83-931B-449E-8AEF-5EEAFE98698E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD7CAF83-931B-449E-8AEF-5EEAFE98698E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +41,10 @@ Global
 		{66EBCA76-7E12-4747-8208-2579D34995DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66EBCA76-7E12-4747-8208-2579D34995DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66EBCA76-7E12-4747-8208-2579D34995DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{034C707D-AD9B-451B-9F18-91973767C6A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{034C707D-AD9B-451B-9F18-91973767C6A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{034C707D-AD9B-451B-9F18-91973767C6A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{034C707D-AD9B-451B-9F18-91973767C6A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
