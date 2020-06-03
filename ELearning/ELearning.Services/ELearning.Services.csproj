@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\ELearning.Entities\ELearning.Entities.csproj" />
   </ItemGroup>
 
 </Project>

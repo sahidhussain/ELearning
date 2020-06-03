@@ -9,39 +9,107 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ELearning.Infrastructure.Generic
 {
-    public abstract class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<TEntity> : IGenericAsyncRepository<TEntity> where TEntity : class
     {
-        protected AppDbContext RepositoryContext { get; set; }
-
-        public GenericRepository(AppDbContext repositoryContext)
+        protected AppDbContext dbContext { get; set; }
+        private DbSet<TEntity> dbSet;
+        public GenericRepository(AppDbContext DBContext)
         {
-            this.RepositoryContext = repositoryContext;
+            dbContext = DBContext;
+            dbSet = dbContext.Set<TEntity>();
         }
 
-        public IQueryable<T> FindAll()
+        public async Task<List<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, params Expression<Func<TEntity, object>>[] includes)
         {
-            return this.RepositoryContext.Set<T>().AsNoTracking();
+            IQueryable<TEntity> query = dbSet;
+
+            foreach (Expression<Func<TEntity, object>> include in includes)
+                query = query.Include(include);
+
+            if (filter != null)
+                query = query.Where(filter);
+
+            if (orderBy != null)
+                query = orderBy(query);
+
+            return await query.ToListAsync();
         }
 
-        public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)
+        public IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
         {
-            return this.RepositoryContext.Set<T>()
-                .Where(expression).AsNoTracking();
+            IQueryable<TEntity> query = dbSet;
+
+            if (filter != null)
+                query = query.Where(filter);
+
+            if (orderBy != null)
+                query = orderBy(query);
+
+            return query;
         }
 
-        public void Create(T entity)
+        public async Task<TEntity> GetByIdAsync(object id)
         {
-            this.RepositoryContext.Set<T>().Add(entity);
+            return await dbSet.FindAsync(id);
         }
 
-        public void Update(T entity)
+        public async Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter = null, params Expression<Func<TEntity, object>>[] includes)
         {
-            this.RepositoryContext.Set<T>().Update(entity);
+            IQueryable<TEntity> query = dbSet;
+
+            foreach (Expression<Func<TEntity, object>> include in includes)
+                query = query.Include(include);
+
+            return await query.FirstOrDefaultAsync(filter);
         }
 
-        public void Delete(T entity)
+        public async void InsertAsync(TEntity entity)
         {
-            this.RepositoryContext.Set<T>().Remove(entity);
+            await dbSet.AddAsync(entity);
+        }
+
+        public async void InsertRangeAsync(IEnumerable<TEntity> entity)
+        {
+            await dbSet.AddRangeAsync(entity);
+        }
+
+        public async void UpdateAsync(TEntity entity)
+        {
+            dbSet.Attach(entity);
+            dbContext.Entry(entity).State = EntityState.Modified;
+
+            await Task.FromResult(true);
+        }
+
+        public async void UpdateRangeAsync(IEnumerable<TEntity> entity)
+        {
+            dbSet.AttachRange(entity);
+            dbContext.Entry(entity).State = EntityState.Modified;
+
+            await Task.FromResult(true);
+        }
+
+        public async void DeleteAsync(object id)
+        {
+            TEntity entityToDelete = await dbSet.FindAsync(id);
+           
+            if (dbContext.Entry(entityToDelete).State == EntityState.Detached)
+            {
+                dbSet.Attach(entityToDelete);
+            }
+            dbSet.Remove(entityToDelete);
+        }
+
+        public async void DeleteAsync(TEntity entity)
+        {
+            dbSet.Remove(entity);
+            await Task.FromResult(true);
+        }
+
+        public async void DeleteRangeAsync(IEnumerable<TEntity> entity)
+        {
+            dbSet.RemoveRange(entity);
+            await Task.FromResult(true);
         }
     }
 }
