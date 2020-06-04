@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ELearning.Dto\ELearning.Dto.csproj" />
     <ProjectReference Include="..\ELearning.Entities\ELearning.Entities.csproj" />
   </ItemGroup>
 

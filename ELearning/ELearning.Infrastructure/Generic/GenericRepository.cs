@@ -19,6 +19,11 @@ namespace ELearning.Infrastructure.Generic
             dbSet = dbContext.Set<TEntity>();
         }
 
+        public async Task<bool> CheckIfExistAsync(Expression<Func<TEntity, bool>> filter)
+        {
+            return await dbSet.AnyAsync(filter);
+        }
+
         public async Task<List<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, params Expression<Func<TEntity, object>>[] includes)
         {
             IQueryable<TEntity> query = dbSet;
@@ -92,7 +97,7 @@ namespace ELearning.Infrastructure.Generic
         public async void DeleteAsync(object id)
         {
             TEntity entityToDelete = await dbSet.FindAsync(id);
-           
+
             if (dbContext.Entry(entityToDelete).State == EntityState.Detached)
             {
                 dbSet.Attach(entityToDelete);

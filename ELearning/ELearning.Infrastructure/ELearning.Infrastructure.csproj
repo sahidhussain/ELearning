@@ -14,8 +14,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ELearning.Dto\ELearning.Dto.csproj" />
     <ProjectReference Include="..\ELearning.Entities\ELearning.Entities.csproj" />
     <ProjectReference Include="..\ELearning.Services\ELearning.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

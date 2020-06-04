@@ -10,6 +10,7 @@ namespace ELearning.Services.Generic
 {
     public interface IGenericAsyncRepository<TEntity>
     {
+        Task<bool> CheckIfExistAsync(Expression<Func<TEntity, bool>> filter);
         Task<List<TEntity>> GetAsync(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
