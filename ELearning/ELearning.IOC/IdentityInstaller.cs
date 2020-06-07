@@ -19,9 +19,6 @@ namespace ELearning.IOC
                             .AddEntityFrameworkStores<AppDbContext>()
                             .AddDefaultTokenProviders();
             #endregion
-
-
-            
         }
     }
 }

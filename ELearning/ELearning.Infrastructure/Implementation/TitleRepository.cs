@@ -23,9 +23,12 @@ namespace ELearning.Infrastructure.Implementation
             var result = await unitOfWork.TitleServices.GetAsync();
 
             var response = new ApiResponse<List<TitleResponse>>();
+
             if (result.Count > 0)
             {
                 response.Success = true;
+                response.Data = new List<TitleResponse>();
+
                 result.ForEach(p => response.Data.Add(new TitleResponse() { ID = p.ID, Name = p.Name, IsActive = p.IsActive }));
             }
             else
@@ -88,13 +91,11 @@ namespace ELearning.Infrastructure.Implementation
         public async Task<ApiResponse<List<Titles>>> BulkAsync(List<TitleRequest> req)
         {
             var titles = new List<Titles>();
-
-            req.ForEach(p => titles.Add(new Titles() { Name = p.Name }));
-
+            req.ForEach(p => titles.Add(new Titles() { Name = p.Name, IsActive = p.IsActive }));
+           
             unitOfWork.TitleServices.InsertRangeAsync(titles);
-
+           
             var result = await unitOfWork.SaveAsync();
-
             var response = new ApiResponse<List<Titles>>();
             if (result)
             {
@@ -107,7 +108,6 @@ namespace ELearning.Infrastructure.Implementation
                 response.Success = false;
                 response.Message = Resource.Failed;
             }
-
             return response;
         }
         public async Task<ApiResponse<TitleResponse>> UpdateAsync(int id, TitleRequest req)

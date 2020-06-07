@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ELearning.Dto\ELearning.Dto.csproj" />
     <ProjectReference Include="..\ELearning.Infrastructure\ELearning.Infrastructure.csproj" />
+    <ProjectReference Include="..\ELearning.Utilities\ELearning.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

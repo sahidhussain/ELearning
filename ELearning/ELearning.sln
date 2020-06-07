@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELearning.API", "ELearning.API\ELearning.API.csproj", "{66ECC0F2-9351-4F43-8818-4653A2354FEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ELearning.API", "ELearning.API\ELearning.API.csproj", "{66ECC0F2-9351-4F43-8818-4653A2354FEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELearning.Dto", "ELearning.Dto\ELearning.Dto.csproj", "{F42802BB-12D4-4BB7-B2A8-4BA79FE57115}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ELearning.Dto", "ELearning.Dto\ELearning.Dto.csproj", "{F42802BB-12D4-4BB7-B2A8-4BA79FE57115}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELearning.Infrastructure", "ELearning.Infrastructure\ELearning.Infrastructure.csproj", "{CD7CAF83-931B-449E-8AEF-5EEAFE98698E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ELearning.Infrastructure", "ELearning.Infrastructure\ELearning.Infrastructure.csproj", "{CD7CAF83-931B-449E-8AEF-5EEAFE98698E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELearning.Services", "ELearning.Services\ELearning.Services.csproj", "{C46B650D-58F0-4190-89AB-4592BD4A4F17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ELearning.Services", "ELearning.Services\ELearning.Services.csproj", "{C46B650D-58F0-4190-89AB-4592BD4A4F17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELearning.IOC", "ELearning.IOC\ELearning.IOC.csproj", "{66EBCA76-7E12-4747-8208-2579D34995DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ELearning.IOC", "ELearning.IOC\ELearning.IOC.csproj", "{66EBCA76-7E12-4747-8208-2579D34995DD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ELearning.Entities", "ELearning.Entities\ELearning.Entities.csproj", "{034C707D-AD9B-451B-9F18-91973767C6A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELearning.Utilities", "ELearning.Utilities\ELearning.Utilities.csproj", "{11F6F44A-044C-4897-AC7B-0FEB9DB2B598}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{034C707D-AD9B-451B-9F18-91973767C6A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{034C707D-AD9B-451B-9F18-91973767C6A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{034C707D-AD9B-451B-9F18-91973767C6A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11F6F44A-044C-4897-AC7B-0FEB9DB2B598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11F6F44A-044C-4897-AC7B-0FEB9DB2B598}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11F6F44A-044C-4897-AC7B-0FEB9DB2B598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11F6F44A-044C-4897-AC7B-0FEB9DB2B598}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

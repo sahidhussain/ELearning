@@ -1,4 +1,4 @@
-﻿using ELearning.Dto.Helper;
+﻿using ELearning.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,9 +40,6 @@ namespace ELearning.IOC
            });
 
             #endregion
-
-
-
         }
 
     }

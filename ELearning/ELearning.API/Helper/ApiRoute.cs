@@ -18,5 +18,12 @@ namespace ELearning.API.Helper
             public const string Bulk = BaseUrl + "/title/bulk";
             public const string Update = BaseUrl + "/title/{titleId}/update";
         }
+
+        public static class Account
+        {
+            public const string Register = BaseUrl + "/account/register";
+            public const string Login = BaseUrl + "/account/login";
+        }
+
     }
 }

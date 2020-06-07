@@ -10,6 +10,8 @@ namespace ELearning.Entities
     {
         public ApplicationUser()
         {
+            Id = Guid.NewGuid().ToString();
+
             this.Addresses = new HashSet<Addresses>();
             this.AssignStudents = new HashSet<AssignStudent>();
             this.Documents = new HashSet<Documents>();

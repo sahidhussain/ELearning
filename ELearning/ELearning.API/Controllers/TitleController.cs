@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ELearning.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class TitleController : ControllerBase
     {
@@ -25,21 +24,35 @@ namespace ELearning.API.Controllers
         public async Task<ActionResult> Get(int titleId)
         {
             var response = await titleService.GetById(titleId);
-            return Ok(response);
+
+            if (response.Success)
+                return Ok(response);
+
+            return NotFound(response);
         }
 
         [HttpGet(ApiRoute.Title.GetAll)]
         public async Task<ActionResult> GetAll()
         {
             var response = await titleService.GetAll();
-            return Ok(response);
+            if (response.Success)
+                return Ok(response);
+
+            return NotFound(response);
         }
 
         [HttpPost(ApiRoute.Title.Create)]
         public async Task<ActionResult> Created([FromBody] TitleRequest req)
         {
             var response = await titleService.CreateAsync(req);
-            return Ok(response);
+            if (response.Success)
+            {
+                var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
+                var locationUri = baseUrl + "/" + ApiRoute.Title.Get.Replace("{titleId}", response.Data.ID.ToString());
+               
+                return Created(locationUri, response);
+            }
+            return BadRequest(response);
         }
 
         [HttpPost(ApiRoute.Title.Bulk)]

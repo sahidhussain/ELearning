@@ -34,6 +34,11 @@ namespace ELearning.API
         {
             app.UseCustomExceptionMiddleware();
             app.UseCustomSwagger(Configuration);
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

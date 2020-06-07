@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ELearning.Dto.Helper
+namespace ELearning.Utilities
 {
     public class JwtSettings
     {

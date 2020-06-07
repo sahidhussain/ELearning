@@ -2,6 +2,7 @@
 using ELearning.Infrastructure.Implementation;
 using ELearning.Services;
 using ELearning.Services.Services;
+using ELearning.Utilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,8 +15,10 @@ namespace ELearning.IOC
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddSingleton<IJwtGenerate, GenerateJwtToken>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<ITitleServices, TitleRepository>();
+            services.AddTransient<IAccountServices, AccountRepository>();
         }
     }
 }
