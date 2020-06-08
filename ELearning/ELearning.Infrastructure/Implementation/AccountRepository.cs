@@ -16,12 +16,44 @@ namespace ELearning.Infrastructure.Implementation
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IJwtGenerate jwtToken;
-        
+
         public AccountRepository(UserManager<ApplicationUser> UserManager, IJwtGenerate JwtToken)
         {
             userManager = UserManager;
             jwtToken = JwtToken;
         }
+
+        public async Task<AuthResponse> LoginAsync(LoginRequest req)
+        {
+            var user = await userManager.FindByEmailAsync(req.Email);
+
+            if (user == null)
+            {
+                return new AuthResponse()
+                {
+                    Success = false,
+                    Errors = new[] { "This email is not registered." }
+                };
+            }
+
+            var checkPassword = await userManager.CheckPasswordAsync(user, req.Password);
+
+            if (!checkPassword)
+            {
+                return new AuthResponse()
+                {
+                    Success = false,
+                    Errors = new[] { "The email/password doesn't matched." }
+                };
+            }
+
+            return new AuthResponse()
+            {
+                Success = true,
+                Token = jwtToken.JwtToken(user)
+            };
+        }
+
         public async Task<ApiResponse<string>> RegisterAsync(RegisterRequest req)
         {
             var userExist = await userManager.FindByEmailAsync(req.Email);

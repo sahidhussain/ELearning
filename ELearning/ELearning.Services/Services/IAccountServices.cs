@@ -11,5 +11,6 @@ namespace ELearning.Services.Services
     public interface IAccountServices
     {
         Task<ApiResponse<string>> RegisterAsync(RegisterRequest req);
+        Task<AuthResponse> LoginAsync(LoginRequest req);
     }
 }
