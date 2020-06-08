@@ -18,6 +18,18 @@ namespace ELearning.IOC
             configuration.Bind(nameof(jwtSettings), jwtSettings);
             services.AddSingleton(jwtSettings);
 
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.SecretKey)),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                RequireExpirationTime = false,
+                ValidateLifetime = false
+            };
+
+            services.AddSingleton(tokenValidationParameters);
+
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -28,15 +40,7 @@ namespace ELearning.IOC
            {
                x.RequireHttpsMetadata = false;
                x.SaveToken = true;
-               x.TokenValidationParameters = new TokenValidationParameters
-               {
-                   ValidateIssuerSigningKey = true,
-                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.SecretKey)),
-                   ValidateIssuer = false,
-                   ValidateAudience = false,
-                   RequireExpirationTime = false,
-                   ValidateLifetime = false
-               };
+               x.TokenValidationParameters = tokenValidationParameters;
            });
 
             #endregion

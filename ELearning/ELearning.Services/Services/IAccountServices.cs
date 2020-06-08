@@ -12,5 +12,6 @@ namespace ELearning.Services.Services
     {
         Task<ApiResponse<string>> RegisterAsync(RegisterRequest req);
         Task<AuthResponse> LoginAsync(LoginRequest req);
+        Task<AuthResponse> RefreshTokenAsync(string token, string refreshToken);
     }
 }

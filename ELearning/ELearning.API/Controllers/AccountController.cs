@@ -53,5 +53,17 @@ namespace ELearning.API.Controllers
             return Ok(response);
         }
 
+        [HttpPost(ApiRoute.Account.Refresh)]
+        public async Task<ActionResult> Refresh(RefreshTokenRequest req)
+        {
+            var response = await accountService.RefreshTokenAsync(req.Token, req.RefreshToken);
+
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
     }
 }

@@ -23,6 +23,7 @@ namespace ELearning.API.Helper
         {
             public const string Register = BaseUrl + "/account/register";
             public const string Login = BaseUrl + "/account/login";
+            public const string Refresh = BaseUrl + "/account/refresh";
         }
 
     }

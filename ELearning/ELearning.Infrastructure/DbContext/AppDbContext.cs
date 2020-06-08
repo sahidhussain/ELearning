@@ -30,6 +30,7 @@ namespace ELearning.Infrastructure.DbContext
         public DbSet<StudentProfile> StudentProfile { get; set; }
         public DbSet<Titles> Titles { get; set; }
         public DbSet<UserType> UserType { get; set; }
+        public DbSet<RefreshToken> RefreshToken { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
