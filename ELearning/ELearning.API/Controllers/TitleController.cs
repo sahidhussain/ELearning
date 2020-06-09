@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ELearning.API.Helper;
 using ELearning.Dto.V1.Request;
+using ELearning.Dto.V1.Response;
 using ELearning.Services;
 using ELearning.Services.Services;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ELearning.API.Controllers
 {
     [ApiController]
+    [Produces(contentType: "application/json")]
     public class TitleController : ControllerBase
     {
         private ITitleServices titleService { get; set; }
@@ -41,7 +43,15 @@ namespace ELearning.API.Controllers
             return NotFound(response);
         }
 
+        #region Title Create
+        /// <summary>
+        /// Creates a title
+        /// </summary>
+        /// <response code="201">Creates a title</response>
+        /// <response code="400">Unable to create a title</response>
         [HttpPost(ApiRoute.Title.Create)]
+        [ProducesResponseType(typeof(ApiResponse<TitleResponse>), statusCode: 201)]
+        [ProducesResponseType(typeof(ApiResponse<TitleResponse>), statusCode: 400)]
         public async Task<ActionResult> Created([FromBody] TitleRequest req)
         {
             var response = await titleService.CreateAsync(req);
@@ -54,6 +64,8 @@ namespace ELearning.API.Controllers
             }
             return BadRequest(response);
         }
+        #endregion
+
 
         [HttpPost(ApiRoute.Title.Bulk)]
         public async Task<ActionResult> Bulk([FromBody] List<TitleRequest> req)

@@ -3,7 +3,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
 namespace ELearning.API.Extensions
 {
@@ -18,6 +22,7 @@ namespace ELearning.API.Extensions
                     Title = "ELearning API",
                     Version = "v1"
                 });
+                x.ExampleFilters();
 
                 var security = new Dictionary<string, IEnumerable<string>>
                 {
@@ -49,8 +54,13 @@ namespace ELearning.API.Extensions
 
                     }
                 });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                x.IncludeXmlComments(xmlPath);
             });
 
+            services.AddSwaggerExamplesFromAssemblyOf<Startup>();
         }
 
         public static void UseCustomSwagger(this IApplicationBuilder app, IConfiguration configuration)

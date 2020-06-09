@@ -11,7 +11,7 @@ using System.Text;
 
 namespace ELearning.IOC
 {
-    public class serviceInstaller : IInstaller
+    public class ServiceInstaller : IInstaller
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
