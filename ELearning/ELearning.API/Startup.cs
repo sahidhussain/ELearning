@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ELearning.API.Extensions;
+using ELearning.API.Filters;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +26,15 @@ namespace ELearning.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(opt =>
+            {
+                opt.Filters.Add<ValidationFilter>();
+            })
+            .AddFluentValidation(config => {
+                config.RegisterValidatorsFromAssemblyContaining<Startup>();
+            });
+
+
             services.InstallServicesInAssemblies(Configuration);
             services.AddSwaggerService();
 

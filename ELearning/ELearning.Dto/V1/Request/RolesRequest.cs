@@ -5,9 +5,8 @@ using System.Text;
 
 namespace ELearning.Dto.V1.Request
 {
-    public class LoginRequest
+    public class RolesRequest
     {
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public string Role { get; set; }
     }
 }

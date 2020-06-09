@@ -5,9 +5,10 @@ using System.Text;
 
 namespace ELearning.Dto.V1.Request
 {
-    public class LoginRequest
+    public class AssignRoleRequest
     {
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public string UserId { get; set; }
+        public string RoleName { get; set; }
+
     }
 }

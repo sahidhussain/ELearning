@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -19,18 +20,70 @@ namespace ELearning.Infrastructure.Implementation
     public class AccountRepository : IAccountServices
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly AppDbContext dbContext;
         private readonly JwtSettings jwtSetting;
         private readonly TokenValidationParameters tokenValidationParameters;
 
-
-        public AccountRepository(UserManager<ApplicationUser> UserManager, JwtSettings JwtSetting, TokenValidationParameters TokenValidationParameters, AppDbContext DbContext)
+        public AccountRepository(UserManager<ApplicationUser> UserManager,
+            RoleManager<IdentityRole> RoleManager,
+            JwtSettings JwtSetting,
+            TokenValidationParameters TokenValidationParameters,
+            AppDbContext DbContext)
         {
             userManager = UserManager;
+            roleManager = RoleManager;
             jwtSetting = JwtSetting;
             tokenValidationParameters = TokenValidationParameters;
             dbContext = DbContext;
         }
+
+
+        #region Roles
+        public async Task<ApiResponse<RolesResponse>> AddRoles(RolesRequest req)
+        {
+            var roleExist = await roleManager.RoleExistsAsync(req.Role);
+
+            if (roleExist)
+            {
+                return new ApiResponse<RolesResponse>()
+                {
+                    Success = false,
+                    Errors = new[] { $"{req.Role} already exist." }
+                };
+            }
+            else
+            {
+                var appRole = new IdentityRole()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = req.Role
+                };
+
+                var result = await roleManager.CreateAsync(appRole);
+
+                if (result.Succeeded)
+                {
+                    return new ApiResponse<RolesResponse>()
+                    {
+                        Success = true,
+                        Data = new RolesResponse() { ID = appRole.Id, Role = appRole.Name }
+                    };
+                }
+                else
+                {
+                    return new ApiResponse<RolesResponse>()
+                    {
+                        Success = false,
+                        Errors = result.Errors.Select(e => e.Description)
+                    };
+
+                }
+            }
+        }
+        #endregion
+
+        #region User Creations
         public async Task<AuthResponse> LoginAsync(LoginRequest req)
         {
             var user = await userManager.FindByEmailAsync(req.Email);
@@ -57,7 +110,7 @@ namespace ELearning.Infrastructure.Implementation
 
             return await GenerateJwtTokenAsync(user);
         }
-        public async Task<ApiResponse<string>> RegisterAsync(RegisterRequest req)
+        public async Task<ApiResponse<string>> RegisterAsync(RegisterRequest req, string role = "User")
         {
             var userExist = await userManager.FindByEmailAsync(req.Email);
 
@@ -179,6 +232,66 @@ namespace ELearning.Infrastructure.Implementation
 
             return await GenerateJwtTokenAsync(user);
         }
+        public async Task<ApiResponse<string>> AssignRoleToUser(string userId, string role)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+
+            var result = await userManager.AddToRoleAsync(user, role);
+
+            if (result.Succeeded)
+            {
+                return new ApiResponse<string>()
+                {
+                    Success = true,
+                    Message = $"{user.Email} was assign the role of {role}."
+                };
+            }
+            else
+            {
+                return new ApiResponse<string>()
+                {
+                    Success = true,
+                    Errors = result.Errors.Select(x => x.Description)
+                };
+
+            }
+        }
+        public async Task<ApiResponse<List<UsersResponse>>> AllUsers()
+        {
+            var users =  userManager.Users
+                        .Include(x => x.Title)
+                        .Include(u => u.UserType)
+                        .Select(s => new UsersResponse
+                        {
+                            ID = s.Id,
+                            Title = s.Title.Name,
+                            FirstName = s.FirstName,
+                            MiddleName = s.MiddleName,
+                            LastName = s.LastName,
+                            Email = s.Email,
+                            UserType = s.UserType.Name,
+                            IsAccountActive = s.IsAccountActive
+                        });
+
+            if (users.Any())
+            {
+                return new ApiResponse<List<UsersResponse>> ()
+                {
+                    Success = true,
+                    Data = await users.ToListAsync()
+                };
+            }
+            else
+            {
+                return new ApiResponse<List<UsersResponse>>()
+                {
+                    Success = false,
+                    Errors = new [] {"No record found"}
+                };
+
+            }
+        }
+        #endregion
 
         #region Private Methods
         private async Task<AuthResponse> GenerateJwtTokenAsync(ApplicationUser user)
@@ -218,7 +331,6 @@ namespace ELearning.Infrastructure.Implementation
                 RefreshToken = refreshToken.Token
             };
         }
-
         private ClaimsPrincipal GetPrincipalFromToken(string token)
         {
             var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
@@ -238,14 +350,12 @@ namespace ELearning.Infrastructure.Implementation
                 return null;
             }
         }
-
         private bool IsJwtWithValidSecurityAlgorithm(SecurityToken validatedToken)
         {
             return (validatedToken is System.IdentityModel.Tokens.Jwt.JwtSecurityToken jwtSecurityToken) &&
                 jwtSecurityToken.Header.Alg.Equals(value: SecurityAlgorithms.HmacSha256,
                 StringComparison.InvariantCultureIgnoreCase);
         }
-
         #endregion
     }
 }

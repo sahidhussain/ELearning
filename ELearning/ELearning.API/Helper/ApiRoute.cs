@@ -24,6 +24,9 @@ namespace ELearning.API.Helper
             public const string Register = BaseUrl + "/account/register";
             public const string Login = BaseUrl + "/account/login";
             public const string Refresh = BaseUrl + "/account/refresh";
+            public const string CreateRole = BaseUrl + "/account/role/create";
+            public const string AssignRole = BaseUrl + "/account/role/assign";
+            public const string GetAllUser = BaseUrl + "/account/Users";
         }
 
     }

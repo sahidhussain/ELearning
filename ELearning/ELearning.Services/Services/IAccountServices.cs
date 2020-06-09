@@ -10,8 +10,14 @@ namespace ELearning.Services.Services
 {
     public interface IAccountServices
     {
-        Task<ApiResponse<string>> RegisterAsync(RegisterRequest req);
+        #region Roles Management
+        Task<ApiResponse<RolesResponse>> AddRoles(RolesRequest req);
+        #endregion
+
+        Task<ApiResponse<string>> RegisterAsync(RegisterRequest req, string role = "User");
         Task<AuthResponse> LoginAsync(LoginRequest req);
         Task<AuthResponse> RefreshTokenAsync(string token, string refreshToken);
+        Task<ApiResponse<string>> AssignRoleToUser(string userId, string role);
+        Task<ApiResponse<List<UsersResponse>>> AllUsers();
     }
 }

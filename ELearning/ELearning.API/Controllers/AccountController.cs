@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ELearning.API.Controllers
 {
-    [ApiController]
+    //[ApiController]
     public class AccountController : ControllerBase
     {
         private IAccountServices accountService { get; set; }
@@ -23,14 +23,14 @@ namespace ELearning.API.Controllers
         [HttpPost(ApiRoute.Account.Register)]
         public async Task<ActionResult> Register(RegisterRequest req)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(new ApiResponse<string>()
-                {
-                    Success = false,
-                    Errors = ModelState.Values.SelectMany(s => s.Errors.Select(e => e.ErrorMessage))
-                });
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(new ApiResponse<string>()
+            //    {
+            //        Success = false,
+            //        Errors = ModelState.Values.SelectMany(s => s.Errors.Select(e => e.ErrorMessage))
+            //    });
+            //}
 
             var response = await accountService.RegisterAsync(req);
 
@@ -57,6 +57,60 @@ namespace ELearning.API.Controllers
         public async Task<ActionResult> Refresh(RefreshTokenRequest req)
         {
             var response = await accountService.RefreshTokenAsync(req.Token, req.RefreshToken);
+
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        [HttpPost(ApiRoute.Account.CreateRole)]
+        public async Task<ActionResult> CreateRole(RolesRequest req)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new ApiResponse<string>()
+                {
+                    Success = false,
+                    Errors = ModelState.Values.SelectMany(s => s.Errors.Select(e => e.ErrorMessage))
+                });
+            }
+
+            var response = await accountService.AddRoles(req);
+
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        [HttpPost(ApiRoute.Account.AssignRole)]
+        public async Task<ActionResult> AssignRole(AssignRoleRequest req)
+        {
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(new ApiResponse<string>()
+            //    {
+            //        Success = false,
+            //        Errors = ModelState.Values.SelectMany(s => s.Errors.Select(e => e.ErrorMessage))
+            //    });
+            //}
+
+            var response = await accountService.AssignRoleToUser(req.UserId, req.RoleName);
+
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        [HttpGet(ApiRoute.Account.GetAllUser)]
+        public async Task<ActionResult> GetAllUser()
+        {
+            var response = await accountService.AllUsers();
 
             if (!response.Success)
             {
